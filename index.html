@@ -3,12 +3,1443 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="CampusCare is a student project prototype offering University of South Florida students practical wellness, study, and campus-resource guidance." />
     <title>USF CampusCare</title>
-    <meta http-equiv="refresh" content="0; url=mybot.html" />
-    <link rel="canonical" href="mybot.html" />
-    <script>window.location.replace("mybot.html");</script>
+    <style>
+      :root {
+              --bg: #eef6fb;
+        --card: #ffffff;
+              --primary: #123c73;
+              --primary-dark: #0d2d56;
+              --primary-soft: #dfeafc;
+              --accent: #4fc5b8;
+              --accent-2: #f7b267;
+              --accent-soft: #dffaf5;
+              --text: #1d2a3a;
+              --muted: #5d6d83;
+              --border: #dfeaf3;
+              --warning: #fff3d6;
+              --warning-text: #7a5a00;
+              --shadow: 0 20px 45px rgba(17, 61, 115, 0.12);
+            }
+
+            * { box-sizing: border-box; }
+
+            html {
+              scroll-behavior: smooth;
+            }
+
+            body {
+              margin: 0;
+              font-family: Arial, Helvetica, sans-serif;
+              background:
+                radial-gradient(circle at top left, rgba(79, 197, 184, 0.18), transparent 26%),
+                radial-gradient(circle at bottom right, rgba(18, 60, 115, 0.15), transparent 28%),
+                linear-gradient(180deg, #edf5fb 0%, #f9fbfd 100%);
+              color: var(--text);
+              line-height: 1.6;
+            }
+
+      a {
+        color: var(--primary);
+        text-decoration: none;
+      }
+
+      .container {
+        width: min(1100px, calc(100% - 32px));
+        margin: 0 auto;
+      }
+
+      header {
+        background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+        color: white;
+        padding: 24px 0 80px;
+      }
+
+      .topbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+      }
+
+      .brand {
+        font-size: 1.35rem;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: 1.25fr 0.75fr;
+        gap: 28px;
+        align-items: center;
+        margin-top: 48px;
+      }
+
+      .eyebrow {
+        display: inline-block;
+        background: rgba(255,255,255,0.1);
+        border: 1px solid rgba(255,255,255,0.2);
+        border-radius: 999px;
+        padding: 6px 12px;
+        font-size: 0.8rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-bottom: 18px;
+      }
+
+      h1 {
+        font-size: clamp(2.2rem, 4vw, 4rem);
+        line-height: 1.1;
+        margin: 0 0 16px;
+      }
+
+      .lead {
+        font-size: 1.08rem;
+        max-width: 620px;
+        color: rgba(255,255,255,0.88);
+        margin-bottom: 28px;
+      }
+
+      .cta-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+
+      .btn {
+        display: inline-block;
+        border: none;
+        border-radius: 10px;
+        padding: 14px 22px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .btn:hover {
+        transform: translateY(-1px);
+      }
+
+      .btn-primary {
+        background: var(--accent);
+        color: #0a2d2a;
+        box-shadow: 0 12px 24px rgba(90, 183, 179, 0.4);
+      }
+
+      .btn-secondary {
+        background: rgba(255,255,255,0.14);
+        color: white;
+        border: 1px solid rgba(255,255,255,0.3);
+      }
+
+      .hero-panel {
+        background: linear-gradient(180deg, rgba(255,255,255,0.14), rgba(255,255,255,0.08));
+        border: 1px solid rgba(255,255,255,0.18);
+        border-radius: 24px;
+        padding: 22px;
+        backdrop-filter: blur(12px);
+        box-shadow: 0 20px 35px rgba(7, 20, 38, 0.18);
+      }
+
+      .hero-badges {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 16px;
+      }
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 12px;
+        border-radius: 999px;
+        font-size: 0.76rem;
+        font-weight: 700;
+        letter-spacing: 0.03em;
+        background: rgba(255,255,255,0.14);
+        border: 1px solid rgba(255,255,255,0.18);
+        color: #f4fbff;
+      }
+
+      .dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--accent);
+        box-shadow: 0 0 0 4px rgba(79,197,184,0.2);
+      }
+
+      .hero-box {
+        background: rgba(255,255,255,0.09);
+        border: 1px solid rgba(255,255,255,0.12);
+        border-radius: 16px;
+        padding: 18px;
+        margin-bottom: 16px;
+      }
+
+      .hero-box:last-child {
+        margin-bottom: 0;
+      }
+
+      .hero-box strong {
+        display: block;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        opacity: 0.8;
+        margin-bottom: 8px;
+      }
+
+      .hero-box span {
+        font-size: 1.1rem;
+        font-weight: 700;
+      }
+
+      .mini-bars {
+        display: flex;
+        align-items: end;
+        gap: 8px;
+        height: 56px;
+        margin-top: 10px;
+      }
+
+      .bar {
+        flex: 1;
+        border-radius: 10px 10px 0 0;
+        background: linear-gradient(180deg, var(--accent) 0%, rgba(255,255,255,0.18) 100%);
+      }
+
+      .bar:nth-child(1) { height: 38%; }
+      .bar:nth-child(2) { height: 62%; }
+      .bar:nth-child(3) { height: 70%; }
+      .bar:nth-child(4) { height: 86%; }
+      .bar:nth-child(5) { height: 58%; }
+
+      main {
+        padding: 52px 0 60px;
+      }
+
+      section {
+        margin-bottom: 36px;
+      }
+
+      .section-title {
+        font-size: clamp(1.6rem, 2vw, 2.3rem);
+        margin: 0 0 18px;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 20px;
+      }
+
+      .card {
+        background: var(--card);
+        border-radius: 18px;
+        border: 1px solid var(--border);
+        box-shadow: var(--shadow);
+        padding: 20px;
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+      }
+
+      .card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 30px 40px rgba(18, 60, 115, 0.14);
+      }
+
+      .icon {
+        width: 52px;
+        height: 52px;
+        display: grid;
+        place-items: center;
+        border-radius: 14px;
+        background: var(--accent-soft);
+        color: var(--primary-dark);
+        font-size: 1.4rem;
+        font-weight: 700;
+        margin-bottom: 14px;
+      }
+
+      h3 {
+        margin: 0 0 10px;
+        font-size: 1.15rem;
+      }
+
+      .card p,
+      .feature-list,
+      .questions li,
+      .bot-info {
+        color: var(--muted);
+      }
+
+      .feature-list {
+        list-style: disc;
+        padding-left: 18px;
+        margin: 0;
+      }
+
+      .two-col {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 22px;
+      }
+
+      .panel {
+        background: linear-gradient(180deg, #ffffff 0%, #f7fbff 100%);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        box-shadow: var(--shadow);
+        padding: 24px;
+      }
+
+      .questions {
+        margin: 0;
+        padding-left: 18px;
+      }
+
+      .questions li + li {
+        margin-top: 10px;
+      }
+
+      .alert {
+        background: var(--warning);
+        color: var(--warning-text);
+        border: 1px solid rgba(122, 90, 0, 0.18);
+        border-radius: 16px;
+        padding: 18px 20px;
+        margin-top: 18px;
+      }
+
+      .stats-strip {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 18px;
+        margin: -35px auto 26px;
+        position: relative;
+        z-index: 2;
+      }
+
+      .stat-box {
+        background: rgba(255,255,255,0.95);
+        border: 1px solid rgba(17,61,115,0.08);
+        border-radius: 18px;
+        box-shadow: 0 12px 28px rgba(21, 48, 84, 0.12);
+        padding: 20px 18px;
+        text-align: center;
+      }
+
+      .stat-number {
+        display: block;
+        font-size: clamp(1.7rem, 2vw, 2.5rem);
+        font-weight: 800;
+        color: var(--primary);
+        line-height: 1.1;
+      }
+
+      .stat-label {
+        display: block;
+        color: var(--muted);
+        margin-top: 6px;
+        font-size: 0.95rem;
+      }
+
+      .steps-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 18px;
+      }
+
+      .step-card {
+        background: linear-gradient(180deg, #ffffff 0%, #f2f8ff 100%);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 22px 18px;
+        box-shadow: var(--shadow);
+      }
+
+      .step-index {
+        display: inline-grid;
+        place-items: center;
+        width: 36px;
+        height: 36px;
+        background: var(--primary);
+        color: white;
+        border-radius: 50%;
+        font-weight: 700;
+        margin-bottom: 12px;
+      }
+
+      .quote-box {
+        background: linear-gradient(135deg, #eefaf9 0%, #edf5ff 100%);
+        border: 1px solid #d5ece9;
+        border-radius: 22px;
+        padding: 28px 26px;
+        margin-top: 8px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .quote-box::before {
+        content: "“";
+        position: absolute;
+        top: 10px;
+        left: 20px;
+        font-size: 4rem;
+        line-height: 1;
+        color: rgba(18, 60, 115, 0.12);
+      }
+
+      .quote-box p {
+        margin: 0;
+        padding-left: 28px;
+        color: var(--primary-dark);
+        font-size: clamp(1.1rem, 2vw, 1.5rem);
+        font-weight: 700;
+        line-height: 1.5;
+      }
+
+      .site-nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+        padding: 18px 0 0;
+      }
+
+      .nav-links {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+
+      .nav-links a {
+        color: rgba(255,255,255,0.85);
+        font-size: 0.9rem;
+        padding: 8px 12px;
+        border-radius: 999px;
+        transition: background 0.2s ease;
+      }
+
+      .nav-links a:hover {
+        background: rgba(255,255,255,0.08);
+      }
+
+      .hero-visual {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .dashboard-card {
+        position: relative;
+        width: min(100%, 430px);
+        background: rgba(12, 31, 56, 0.62);
+        border: 1px solid rgba(255,255,255,0.18);
+        border-radius: 24px;
+        padding: 22px 20px 18px;
+        box-shadow: 0 26px 50px rgba(7, 19, 38, 0.28);
+        backdrop-filter: blur(15px);
+      }
+
+      .dashboard-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 18px;
+      }
+
+      .pulse {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(79,197,184,0.12);
+        border: 1px solid rgba(79,197,184,0.3);
+        border-radius: 999px;
+        padding: 6px 10px;
+        color: #dffaf5;
+        font-size: 0.74rem;
+        font-weight: 700;
+      }
+
+      .pulse-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #72f0d0;
+        box-shadow: 0 0 0 6px rgba(114,240,208,0.16);
+      }
+
+      .mini-chart {
+        display: flex;
+        align-items: end;
+        gap: 8px;
+        height: 110px;
+        margin: 4px 0 18px;
+        padding: 14px 10px 0;
+        border-radius: 18px;
+        background: rgba(255,255,255,0.04);
+      }
+
+      .mini-bar {
+        flex: 1;
+        border-radius: 10px 10px 0 0;
+        background: linear-gradient(180deg, rgba(79,197,184,0.95) 0%, rgba(255,255,255,0.18) 100%);
+      }
+
+      .mini-bar:nth-child(1) { height: 26%; }
+      .mini-bar:nth-child(2) { height: 38%; }
+      .mini-bar:nth-child(3) { height: 58%; }
+      .mini-bar:nth-child(4) { height: 74%; }
+      .mini-bar:nth-child(5) { height: 88%; }
+      .mini-bar:nth-child(6) { height: 67%; }
+      .mini-bar:nth-child(7) { height: 96%; }
+
+      .insight-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+
+      .insight {
+        background: rgba(255,255,255,0.05);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 14px;
+        padding: 12px 12px 10px;
+      }
+
+      .insight strong {
+        color: #dfeeff;
+        display: block;
+        margin-bottom: 6px;
+        font-size: 0.78rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+
+      .insight span {
+        color: #f6f9ff;
+        font-size: 1.1rem;
+        font-weight: 700;
+      }
+
+      .service-list {
+        margin: 18px 0 0;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .chip {
+        display: inline-flex;
+        align-items: center;
+        border-radius: 999px;
+        padding: 7px 10px;
+        background: rgba(79,197,184,0.12);
+        border: 1px solid rgba(79,197,184,0.22);
+        color: #dffaf5;
+        font-size: 0.78rem;
+        font-weight: 700;
+      }
+
+      .bot-shell {
+        background: #f3f8ff;
+        border: 1px solid var(--border);
+        border-radius: 22px;
+        box-shadow: var(--shadow);
+        padding: 24px;
+      }
+
+      .bot-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 16px;
+      }
+
+      .bot-title {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .bot-avatar {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+        color: white;
+        display: grid;
+        place-items: center;
+        font-weight: 700;
+      }
+
+      .status {
+        color: #1d7a48;
+        background: #eafaf1;
+        border: 1px solid #c7f0d5;
+        border-radius: 999px;
+        padding: 6px 10px;
+        font-size: 0.82rem;
+        font-weight: 700;
+      }
+
+      .bot-placeholder {
+        min-height: 420px;
+        background: linear-gradient(180deg, #ffffff 0%, #f7fbff 100%);
+        border: 1px solid var(--border);
+        border-radius: 22px;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 16px;
+      }
+
+      .chat-thread {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        flex: 1;
+        padding: 8px 8px 0;
+      }
+
+      .chat-bubble {
+        max-width: 78%;
+        padding: 12px 14px;
+        border-radius: 18px;
+        font-size: 0.98rem;
+        line-height: 1.5;
+      }
+
+      .bot-msg {
+        align-self: flex-start;
+        background: #eaf3ff;
+        color: var(--text);
+        border-top-left-radius: 6px;
+      }
+
+      .user-msg {
+        align-self: flex-end;
+        background: linear-gradient(135deg, var(--primary) 0%, #1c5ea6 100%);
+        color: white;
+        border-top-right-radius: 6px;
+      }
+
+      .chat-input {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background: #f3f8ff;
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 10px 12px;
+      }
+
+      .chat-input input {
+        flex: 1;
+        border: none;
+        background: transparent;
+        font-size: 0.98rem;
+        color: var(--text);
+        outline: none;
+      }
+
+      .send-btn {
+        border: none;
+        background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+        color: white;
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        font-weight: 700;
+        font-size: 1rem;
+        cursor: pointer;
+      }
+
+      footer {
+        background: #0d1f38;
+        color: rgba(255,255,255,0.8);
+        padding: 24px 0;
+      }
+
+      .footer-inner {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+
+      @media (max-width: 860px) {
+        .hero,
+        .two-col,
+        .grid,
+        .steps-grid,
+        .stats-strip {
+          grid-template-columns: 1fr;
+        }
+
+        .topbar,
+        .bot-head,
+        .footer-inner {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+      }
+
+      :root {
+        --primary: #006747;
+        --primary-dark: #004b36;
+        --primary-soft: #e5f2ec;
+        --accent: #c5a900;
+        --accent-soft: #f7f1cf;
+        --text: #18251f;
+        --muted: #64736b;
+        --border: #dce8e1;
+        --shadow: 0 18px 48px rgba(0, 60, 42, 0.09);
+      }
+
+      body {
+        background: #f7f8f5;
+        line-height: 1.7;
+      }
+
+      .container {
+        width: min(1180px, calc(100% - 48px));
+      }
+
+      header {
+        position: relative;
+        isolation: isolate;
+        overflow: hidden;
+        background:
+          radial-gradient(ellipse at 82% 55%, rgba(197, 169, 0, 0.22), transparent 37%),
+          linear-gradient(125deg, #006747 0%, #004b36 60%, #073d31 100%);
+        padding: 18px 0 88px;
+      }
+
+      header::after {
+        content: "";
+        position: absolute;
+        z-index: -1;
+        width: 520px;
+        height: 520px;
+        right: -210px;
+        top: 95px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 50%;
+        box-shadow: 0 0 0 44px rgba(255,255,255,0.025), 0 0 0 88px rgba(255,255,255,0.025);
+        pointer-events: none;
+      }
+
+      .site-nav {
+        padding: 10px 0;
+        border-bottom: 1px solid rgba(255,255,255,0.16);
+      }
+
+      .brand {
+        letter-spacing: -0.02em;
+      }
+
+      .nav-links a {
+        font-size: 0.78rem;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+      }
+
+      .nav-links a:hover {
+        background: rgba(255,255,255,0.14);
+      }
+
+      .hero {
+        grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
+        gap: clamp(32px, 7vw, 100px);
+        margin-top: 72px;
+      }
+
+      .eyebrow {
+        color: #f2df77;
+        background: rgba(255,255,255,0.08);
+        border-color: rgba(255,255,255,0.2);
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+      }
+
+      h1 {
+        max-width: 700px;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: clamp(3rem, 6vw, 5.4rem);
+        letter-spacing: -0.055em;
+        line-height: 1.02;
+      }
+
+      h1 span {
+        color: #f2df77;
+        white-space: nowrap;
+      }
+
+      .lead {
+        max-width: 560px;
+        color: rgba(255,255,255,0.82);
+        font-size: 1.08rem;
+        line-height: 1.8;
+      }
+
+      .btn {
+        border-radius: 999px;
+        padding: 14px 23px;
+        font-size: 0.9rem;
+      }
+
+      .btn-primary {
+        background: #f2df77;
+        color: #183b2c;
+        box-shadow: 0 12px 26px rgba(5, 28, 20, 0.2);
+      }
+
+      .btn-primary:hover {
+        background: #fff0a5;
+        box-shadow: 0 16px 30px rgba(5, 28, 20, 0.28);
+      }
+
+      .hero-visual {
+        min-height: 340px;
+      }
+
+      .dashboard-card {
+        width: min(100%, 440px);
+        border-radius: 28px;
+        background: rgba(9, 44, 34, 0.73);
+        border-color: rgba(255,255,255,0.24);
+        box-shadow: 0 30px 70px rgba(0, 24, 17, 0.28);
+      }
+
+      .dashboard-top .brand {
+        color: white;
+      }
+
+      .mini-chart {
+        background:
+          linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px) 0 0 / 100% 25%,
+          rgba(255,255,255,0.035);
+      }
+
+      .mini-bar {
+        background: linear-gradient(180deg, #f2df77 0%, rgba(242,223,119,0.18) 100%);
+      }
+
+      .pulse {
+        color: #fff3ad;
+        background: rgba(242,223,119,0.12);
+        border-color: rgba(242,223,119,0.28);
+      }
+
+      .pulse-dot {
+        background: #f2df77;
+        box-shadow: 0 0 0 6px rgba(242,223,119,0.15);
+      }
+
+      .chip {
+        color: #fff3ad;
+        background: rgba(242,223,119,0.1);
+        border-color: rgba(242,223,119,0.24);
+      }
+
+      main {
+        padding: 0 0 76px;
+      }
+
+      section {
+        margin-bottom: 58px;
+        scroll-margin-top: 28px;
+      }
+
+      .stats-strip {
+        margin: -38px auto 68px;
+        gap: 0;
+        overflow: hidden;
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        background: white;
+        box-shadow: var(--shadow);
+      }
+
+      .stat-box {
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+        padding: 25px 18px;
+      }
+
+      .stat-box + .stat-box {
+        border-left: 1px solid var(--border);
+      }
+
+      .stat-number {
+        color: var(--primary);
+      }
+
+      .section-title {
+        margin-bottom: 24px;
+        color: #183b2c;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: clamp(1.9rem, 3vw, 2.7rem);
+        letter-spacing: -0.04em;
+      }
+
+      .grid {
+        gap: 16px;
+      }
+
+      .card,
+      .step-card,
+      .panel,
+      .bot-shell {
+        border-color: var(--border);
+        border-radius: 20px;
+        box-shadow: 0 12px 34px rgba(0, 60, 42, 0.055);
+      }
+
+      .card {
+        min-height: 230px;
+        padding: 24px;
+      }
+
+      .card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 20px 42px rgba(0, 60, 42, 0.11);
+      }
+
+      .icon {
+        border-radius: 16px;
+        background: var(--primary-soft);
+        color: var(--primary);
+        font-size: 1rem;
+      }
+
+      h3 {
+        color: #183b2c;
+        font-size: 1.18rem;
+      }
+
+      .step-card {
+        padding: 23px;
+        background: white;
+      }
+
+      .step-index {
+        background: var(--primary);
+        box-shadow: 0 0 0 5px var(--primary-soft);
+      }
+
+      .panel {
+        padding: 30px;
+        background: white;
+      }
+
+      .alert {
+        background: #fbf7df;
+        border-color: #ede3a8;
+        border-radius: 14px;
+        color: #514912;
+      }
+
+      .alert a {
+        color: var(--primary-dark);
+        font-weight: 700;
+        text-decoration: underline;
+        text-underline-offset: 3px;
+      }
+
+      .quote-box {
+        border: 0;
+        border-radius: 22px;
+        background: #e9f2ec;
+        padding: 34px 32px;
+      }
+
+      .quote-box p {
+        color: #174b37;
+        font-family: Georgia, "Times New Roman", serif;
+        font-weight: 400;
+      }
+
+      .bot-shell {
+        padding: 26px;
+        background: white;
+      }
+
+      .bot-avatar {
+        background: var(--primary);
+        box-shadow: 0 0 0 5px var(--primary-soft);
+      }
+
+      .status {
+        color: var(--primary-dark);
+        background: var(--primary-soft);
+        border-color: #cce2d5;
+      }
+
+      .bot-placeholder {
+        min-height: 250px;
+        justify-content: center;
+        gap: 10px;
+        border-radius: 16px;
+        background:
+          radial-gradient(circle at 100% 0, rgba(0,103,71,0.07), transparent 34%),
+          #f8faf8;
+        padding: clamp(24px, 5vw, 44px);
+      }
+
+      .bot-placeholder h3 {
+        margin-bottom: 0;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 1.6rem;
+      }
+
+      .bot-placeholder p {
+        max-width: 720px;
+        margin: 0;
+        color: var(--muted);
+      }
+
+      footer {
+        background: #073d31;
+        border-top: 4px solid #c5a900;
+      }
+
+      @media (max-width: 860px) {
+        .hero {
+          gap: 38px;
+          margin-top: 48px;
+        }
+
+        .hero-visual {
+          min-height: 300px;
+        }
+
+        .stats-strip {
+          margin-bottom: 52px;
+        }
+
+        .grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 560px) {
+        .container {
+          width: min(100% - 32px, 1180px);
+        }
+
+        header {
+          padding-bottom: 70px;
+        }
+
+        .site-nav {
+          align-items: flex-start;
+          flex-direction: column;
+          gap: 10px;
+        }
+
+        .nav-links {
+          width: 100%;
+          justify-content: flex-start;
+          gap: 2px;
+        }
+
+        .nav-links a {
+          padding: 7px 10px 7px 0;
+          font-size: 0.68rem;
+        }
+
+        .hero {
+          grid-template-columns: minmax(0, 1fr);
+          margin-top: 42px;
+          gap: 30px;
+          width: 100%;
+        }
+
+        .hero > div:first-child {
+          min-width: 0;
+          width: 100%;
+        }
+
+        h1 {
+          max-width: 100%;
+          font-size: clamp(2.8rem, 13vw, 3.8rem);
+          line-height: 1.04;
+          overflow-wrap: normal;
+        }
+
+        .lead {
+          max-width: 100%;
+          font-size: 1rem;
+        }
+
+        .cta-row {
+          gap: 10px;
+        }
+
+        .btn {
+          padding: 13px 17px;
+          font-size: 0.82rem;
+        }
+
+        .hero-visual {
+          width: 100%;
+          min-width: 0;
+          min-height: 0;
+          padding: 4px 0;
+        }
+
+        .dashboard-card {
+          width: 100%;
+          min-width: 0;
+          padding: 18px;
+        }
+
+        .dashboard-top {
+          gap: 8px;
+        }
+
+        .dashboard-top .brand {
+          font-size: 0.9rem !important;
+        }
+
+        .insight-grid {
+          gap: 8px;
+        }
+
+        .insight {
+          min-width: 0;
+        }
+
+        .insight span {
+          font-size: 0.96rem;
+        }
+
+        .service-list {
+          gap: 6px;
+        }
+
+        .chip {
+          padding: 6px 8px;
+          font-size: 0.72rem;
+        }
+
+        .stats-strip {
+          grid-template-columns: 1fr;
+          margin-top: -28px;
+        }
+
+        .stat-box {
+          padding: 16px;
+        }
+
+        .stat-box + .stat-box {
+          border-top: 1px solid var(--border);
+          border-left: 0;
+        }
+
+        .grid {
+          grid-template-columns: 1fr;
+        }
+
+        .card {
+          min-height: 0;
+        }
+
+        .panel,
+        .bot-shell {
+          padding: 20px;
+        }
+
+        .bot-head {
+          gap: 12px;
+        }
+
+        .bot-title {
+          min-width: 0;
+        }
+
+        .bot-info {
+          font-size: 0.88rem;
+        }
+
+        .bot-placeholder {
+          min-height: 0;
+          padding: 22px;
+        }
+
+        .footer-inner {
+          align-items: flex-start;
+        }
+
+        .footer-inner > div {
+          max-width: 100%;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          scroll-behavior: auto !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+    </style>
   </head>
   <body>
-    <p>Redirecting to <a href="mybot.html">CampusCare Bot</a>…</p>
+    <header>
+      <div class="container">
+        <div class="site-nav">
+          <div class="brand">USF CampusCare</div>
+          <nav class="nav-links" aria-label="Main navigation">
+            <a href="#resources">Features</a>
+            <a href="#usf-resources">Resources</a>
+            <a href="#workflow">How it works</a>
+            <a href="#bot">Bot</a>
+          </nav>
+        </div>
+
+        <div class="hero">
+          <div>
+            <div class="eyebrow">Meet CampusCare Bot · Support for USF students</div>
+            <h1>Find your next step at <span>USF</span>.</h1>
+            <p class="lead">
+              CampusCare Bot helps University of South Florida students work through academic stress,
+              study planning, and wellness concerns, then points them toward relevant USF support.
+            </p>
+            <div class="cta-row">
+              <a href="#bot" class="btn btn-primary">Ask the bot</a>
+              <a href="#resources" class="btn btn-secondary">Explore support</a>
+            </div>
+          </div>
+
+          <div class="hero-visual" aria-label="CampusCare overview">
+            <div class="dashboard-card">
+              <div class="dashboard-top">
+                <div class="brand" style="font-size:1rem;">USF CampusCare</div>
+                <div class="pulse"><span class="pulse-dot"></span> Student guide</div>
+              </div>
+
+              <div class="mini-chart" aria-hidden="true">
+                <span class="mini-bar"></span>
+                <span class="mini-bar"></span>
+                <span class="mini-bar"></span>
+                <span class="mini-bar"></span>
+                <span class="mini-bar"></span>
+                <span class="mini-bar"></span>
+                <span class="mini-bar"></span>
+              </div>
+
+              <div class="insight-grid">
+                <div class="insight">
+                  <strong>Study support</strong>
+                  <span>Build a plan</span>
+                </div>
+                <div class="insight">
+                  <strong>Wellness</strong>
+                  <span>Find a next step</span>
+                </div>
+              </div>
+
+              <div class="service-list">
+                <span class="chip">Study plan</span>
+                <span class="chip">Wellness</span>
+                <span class="chip">USF resources</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <div class="container">
+        <div class="stats-strip">
+          <div class="stat-box">
+            <span class="stat-number">3</span>
+            <span class="stat-label">USF campuses: Tampa, St. Petersburg, Sarasota-Manatee</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-number">4</span>
+            <span class="stat-label">Key USF support services the bot can point you to</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-number">24/7</span>
+            <span class="stat-label">Chat available anytime, right on this page</span>
+          </div>
+        </div>
+
+        <section id="resources">
+          <h2 class="section-title">What the bot can help with</h2>
+          <div class="grid">
+            <article class="card">
+              <div class="icon">01</div>
+              <h3>Stress Management</h3>
+              <p>Guidance for coping with deadlines, pressure, and burnout before it affects well-being.</p>
+            </article>
+
+            <article class="card">
+              <div class="icon">02</div>
+              <h3>Study Balance</h3>
+              <p>Smart planning suggestions for balancing coursework, sleep, and healthy routines.</p>
+            </article>
+
+            <article class="card">
+              <div class="icon">03</div>
+              <h3>Academic Support</h3>
+              <p>Help navigating USF academic advising, tutoring, and learning-support resources.</p>
+            </article>
+
+            <article class="card">
+              <div class="icon">04</div>
+              <h3>Wellness Guidance</h3>
+              <p>Practical steps to improve focus, manage stress, and find appropriate USF support.</p>
+            </article>
+          </div>
+        </section>
+
+        <section id="usf-resources">
+          <h2 class="section-title">USF resources the bot knows about</h2>
+          <div class="grid">
+            <article class="card">
+              <div class="icon">CC</div>
+              <h3>Counseling Center</h3>
+              <p>Confidential counseling for enrolled USF students, including individual and group sessions and crisis support.</p>
+              <p><strong>Use it when:</strong> stress, anxiety, low mood, or personal concerns are getting in the way of daily life.</p>
+            </article>
+
+            <article class="card">
+              <div class="icon">AS</div>
+              <h3>Academic Success Center</h3>
+              <p>Tutoring, writing support, and learning-strategy help for many USF courses.</p>
+              <p><strong>Use it when:</strong> you're stuck in a class, preparing for exams, or want feedback on a paper.</p>
+            </article>
+
+            <article class="card">
+              <div class="icon">AA</div>
+              <h3>Academic Advising</h3>
+              <p>Advisors help with course planning, degree requirements, registration, and choosing or changing a major.</p>
+              <p><strong>Use it when:</strong> your course load feels unmanageable or you're unsure what to take next semester.</p>
+            </article>
+
+            <article class="card">
+              <div class="icon">SA</div>
+              <h3>Student Accessibility Services</h3>
+              <p>Coordinates academic accommodations, such as testing adjustments, for students with disabilities or health conditions.</p>
+              <p><strong>Use it when:</strong> a documented condition affects how you learn, take exams, or attend class.</p>
+            </article>
+          </div>
+        </section>
+
+        <section id="workflow">
+          <h2 class="section-title">How CampusCare works</h2>
+          <div class="steps-grid">
+            <div class="step-card">
+              <div class="step-index">1</div>
+              <h3>Recognize</h3>
+              <p>The bot identifies stress, burnout, overload, or exam anxiety in plain, supportive language.</p>
+            </div>
+            <div class="step-card">
+              <div class="step-index">2</div>
+              <h3>Clarify</h3>
+              <p>It asks a few simple questions to understand what the student is facing and what matters most.</p>
+            </div>
+            <div class="step-card">
+              <div class="step-index">3</div>
+              <h3>Plan</h3>
+              <p>It suggests small, realistic steps such as breaking tasks into manageable pieces or planning review time.</p>
+            </div>
+            <div class="step-card">
+              <div class="step-index">4</div>
+              <h3>Connect</h3>
+              <p>It helps students identify relevant USF resources and encourages professional help when appropriate.</p>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <div class="two-col">
+            <div class="panel">
+              <h2 class="section-title">Examples of student questions</h2>
+              <ul class="questions">
+                <li>“I feel overwhelmed with schoolwork. What should I do?”</li>
+                <li>“How can I reduce exam stress and improve my study routine?”</li>
+                <li>“What USF resource can help me with tutoring or academic advising?”</li>
+                <li>“I feel burned out. What healthy habits can help me regain balance?”</li>
+              </ul>
+            </div>
+
+            <div class="panel">
+              <h2 class="section-title">Designed for real student needs</h2>
+              <ul class="feature-list">
+                <li>Encourages healthy routines and realistic planning.</li>
+                <li>Helps students identify USF Counseling Center, Academic Success Center, advising, and accessibility support.</li>
+                <li>Addresses common challenges such as stress, anxiety, and overload.</li>
+                <li>Supports students with empathetic, action-oriented information.</li>
+              </ul>
+
+              <div class="alert">
+                <strong>In crisis or thinking about harming yourself?</strong> Call or text <strong>988</strong> (Suicide &amp; Crisis Lifeline) any time, or call <strong>911</strong> in an emergency.<br /><br />
+                CampusCare is a student project prototype, not an official University of South Florida service. It provides general information, not counseling or medical care. Students should confirm current services and contact details through <a href="https://www.usf.edu/" target="_blank" rel="noopener noreferrer">USF's official website</a> and contact a qualified professional when they need personal support.
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <div class="quote-box">
+            <p>“At USF, finding the right next step can start with a small plan, a conversation, or reaching out to campus support.”</p>
+          </div>
+        </section>
+
+        <section id="bot">
+          <h2 class="section-title">Try CampusCare Bot</h2>
+
+          <div class="bot-shell">
+            <div class="bot-head">
+              <div class="bot-title">
+                <div class="bot-avatar">CC</div>
+                <div>
+                  <strong>CampusCare Bot</strong><br />
+                  <span class="bot-info">Student wellness and campus-resource guide</span>
+                </div>
+              </div>
+              <span class="status">Available anytime</span>
+            </div>
+
+            <div class="bot-placeholder">
+              <h3>Start a conversation</h3>
+              <p><strong>Click the chat bubble in the bottom-right corner of this page</strong> to open CampusCare Bot and type your question.</p>
+              <p>Ask about study stress, planning, or USF resources such as counseling, tutoring, academic advising, and accessibility support. If your campus matters, tell the bot whether you are at Tampa, St. Petersburg, or Sarasota-Manatee.</p>
+              <p>This student project is not an official USF service. If you are in crisis, call or text <strong>988</strong> (Suicide &amp; Crisis Lifeline) or call <strong>911</strong> in an emergency.</p>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer>
+      <div class="container footer-inner">
+        <div>USF CampusCare</div>
+        <div>An independent student project prototype for USF students</div>
+      </div>
+    </footer>
+
+    <script src="https://cdn.botpress.cloud/webchat/v5.0/inject.js"></script>
+    <script src="https://files.bpcontent.cloud/2026/11/06/16/20261106162031-L8GZPTV6.js" defer></script>
   </body>
 </html>
